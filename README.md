@@ -1,3 +1,37 @@
+# docker  
+최초 작성일 : 2024-01-15  
+마지막 수정일 : 2024-01-15  
+  
+## 0. Overview
+docker에 대한 개념, 설치, 간단한 조작 방법에 대해서 공부한다.
+
+## Table of Contents
+1. [Install WSL2 System in Windows](#1.-Install-WSL2-system-in-Windows)
+2. [Install Docker Engine on WLS2](#2.-Install-Docker-Engine-on-WLS2)
+3. [Install Airflow in Docker](#3.-Install-Airflow-in-Docker) 
+
+
+
+## 1. Install WSL2 System in Windows
+Windows 환경에서 명령 프롬프트(cmd)를 관리자 권한으로 실행한다. 이 후, **wsl --install**를 입력하고, 계정을 생성한다.
+
+```console
+wsl --install
+```
+
+## 2. Install Docker Engine on WLS2
+wsl를 통해 home/user 디렉토리로 이동한 다음, 에러를 발생시키는 패키지를 먼저 삭제한다.
+```console
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+```
+
+설치 전, 설치된 패키지 목록을 최신 상태로 업데이트 한다.
+```console
+sudo apt-get update
+
+
+
+
 # practice--docker
 # Linux에서 docker 삭제 
 
