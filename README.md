@@ -1,23 +1,18 @@
-# docker  
+# Docker
 최초 작성일 : 2024-01-15  
 마지막 수정일 : 2024-01-15  
   
 ## 0. Overview
-docker에 대한 개념, 설치, 간단한 조작 방법에 대해서 공부한다.
+현재 docker는 너무 많은 개발자와 유저들이 사용하고 있는 tool이다. 훌륭한 양질의 내용과 콘텐츠로 docker에 대해 소개하고 있는 영상과 글 또한 많이 있지만, 한번쯤은 docker에 대한 내용을 정리해야만 비로소 내 것이 된다는 믿음에 이 글에서 docker에 대한 내용을 정리한다. 이 글에서는 docker에 대한 개념, 설치, 간단한 조작 방법에 대해서 공부한다. 
 
 ## Table of Contents
-1. [Install WSL2 System in Windows](#1.-Install-WSL2-system-in-Windows)
+1. [Introduction to Docker](#1.-Introduction-to-Docker)
 2. [Install Docker Engine on WLS2](#2.-Install-Docker-Engine-on-WLS2)
 3. [Install Airflow in Docker](#3.-Install-Airflow-in-Docker) 
 
+## 1. Introduction to Docker  
+Docker는 컨테이너화 기술을 기반으로 하는 오픈 소스 플랫폼으로, 애플리케이션을 패키징하고 실행하는 데 활용된다.  Docker는 애플리케이션과 그 의존성을 격리된 환경인 "컨테이너"에 포장하여 이식성을 높이고, 환경 간에 쉽게 배포 및 실행할 수 있다는 장점이 존재한다.
 
-
-## 1. Install WSL2 System in Windows
-Windows 환경에서 명령 프롬프트(cmd)를 관리자 권한으로 실행한다. 이 후, **wsl --install**를 입력하고, 계정을 생성한다.
-
-```console
-wsl --install
-```
 
 ## 2. Install Docker Engine on WLS2
 wsl를 통해 home/user 디렉토리로 이동한 다음, 에러를 발생시키는 패키지를 먼저 삭제한다.
