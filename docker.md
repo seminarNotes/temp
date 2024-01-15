@@ -74,7 +74,7 @@ fe5e85549202: Pull complete
 7320aa32bf42: Download complete
 ```
 
-#### 2-1-3. 로컬 머신에서 이미지 조회  
+#### 2-1-3. 이미지 조회  
 로컬 머신에 저장된 모든 Docker 이미지를 나열한다. 이미지 이름, 태그, 이미지 ID 및 크기 정보가 표시된다.
 ``` bash
 docker images
@@ -94,7 +94,7 @@ hello-world      latest    d2c94e258dcb   8 months ago   13.3kB
 ```
 docker를 설치한 후, 정상적으로 설치가 완료되었는지 확인했었던 "hello-world" 이미지, 과어에 공부하기 위해 사용했단 airflow와 kibana에 대한 image도 조회가 된다.
 
-#### 2-1-3. 로컬 머신에서 이미지 삭제
+#### 2-1-4. 이미지 삭제
 상황에 따라 로컬 머신에 있는 이미지를 삭제 해야 하는 경우가 있다. 이미지 이름과 태그를 지정하여 특정 이미지를 삭제하거나 혹은 테그 없이 이미지 ID(TARGET_KEYWORD)를 사용해서 이미지를 지정하여 삭제할 수 있다. 예를 들어, hello-world 이미지와 airflow 이미를 삭제해보자.
 ``` bash
 # docker rmi <IMAGE_ID>
@@ -129,7 +129,7 @@ redis            latest    e40e2763392d   5 weeks ago    138MB
 elasticsearch    8.11.1    be606e19dd0f   2 months ago   1.43GB
 kibana           8.11.1    dd30ec151776   2 months ago   1.04GB
 ```
-#### 2-1-3. 로컬 머신에서 이미지 업로드  
+#### 2-1-5. 이미지 업로드  
 image를 통해 하는 마지막 작업은 로컬 머신에서 Docker 레지스트리으로 이미지를 업로드 또는 push를 하는 작업이다. 다른 사람들과 함께 일을 하거나 프로젝트를 하는 경우, image를 구성하여, 공유할 때, 해당 작업을 수행한다.
 ``` bash
 # docker push <IMAGE_NAME:TAG>
