@@ -56,7 +56,7 @@ datajoint/mysql                 MySQL image pre-configured to work smoothly … 
 #### 2-1-2. 이미지 다운로드
 Docker 이미지를 Docker 레지스트리에서 로컬 머신으로 다운로드한다. 이미지 이름과 선택적으로 태그를 지정하여 원하는 이미지를 가져올 수 있지만, tag를 생략할 경우, 가장 최신 버전의 image를 가지고 온다.
 ``` bash
-# docker pull <SEARCH_KEYWORD>
+# docker pull <IAMGE_NAME:TAG>
 docker pull mysql
 ```
 ```
@@ -97,7 +97,7 @@ docker를 설치한 후, 정상적으로 설치가 완료되었는지 확인했�
 #### 2-1-3. 로컬 머신에서 이미지 삭제
 상황에 따라 로컬 머신에 있는 이미지를 삭제 해야 하는 경우가 있다. 이미지 이름과 태그를 지정하여 특정 이미지를 삭제하거나 혹은 테그 없이 이미지 ID(TARGET_KEYWORD)를 사용해서 이미지를 지정하여 삭제할 수 있다. 예를 들어, hello-world 이미지와 airflow 이미를 삭제해보자.
 ``` bash
-# docker rmi <TARGET_KEYWORD>
+# docker rmi <IMAGE_ID>
 docker rmi d2c94e258dcb
 ```
 ```
@@ -105,10 +105,10 @@ Untagged: hello-world:latest
 Untagged: hello-world@sha256:ac69084025c660510933cca701f615283cdbb3aa0963188770b54c31c8962493
 Deleted: sha256:d2c94e258dcb3c5ac2798d32e1249e42ef01cba4841c2234249495f87264ac5a
 ```
-이 때, airflow에 대한 이미지 id가 2개로 조회된다. 이미지를 삭제하면, 실행 중인 컨테이너에도 영향을 줄 수 있기 때문에, 삭제하고자 하는 이미지의 id를 확인하고, 정확하게 입력하여 삭제를 하도록 한다. 여기에서는 airflow의 두 이미지 중, tag가 '<none>'으로 되어 있는 이미지 (3accc302611d)를 삭제하였다.
+이 때, airflow에 대한 이미지 id가 2개로 조회된다. 이미지를 삭제하면, 실행 중인 컨테이너에도 영향을 줄 수 있기 때문에, 삭제하고자 하는 이미지의 id를 확인하고, 정확하게 입력하여 삭제를 하도록 한다. 여기에서는 airflow의 두 이미지 중, tag가 '<none>'으로 되어 있는 이미지 ('3accc302611d')를 삭제하였다.
 ``` bash
-# docker rmi <TARGET_KEYWORD>
-docker rmi --force 3accc302611d
+# docker rmi <IMAGE_ID>
+docker rmi 3accc302611d
 ```
 ```
 Untagged: apache/airflow@sha256:54896d94e2b535f18b3ea3edce1c5ff2a205300b2161c8faf163b7f502a092c1
@@ -128,6 +128,12 @@ postgres         13        135171763bd4   4 weeks ago    413MB
 redis            latest    e40e2763392d   5 weeks ago    138MB
 elasticsearch    8.11.1    be606e19dd0f   2 months ago   1.43GB
 kibana           8.11.1    dd30ec151776   2 months ago   1.04GB
+```
+#### 2-1-3. 로컬 머신에서 이미지 업로드  
+image를 통해 하는 마지막 작업은 로컬 머신에서 Docker 레지스트리으로 이미지를 업로드 또는 push를 하는 작업이다. 다른 사람들과 함께 일을 하거나 프로젝트를 하는 경우, image를 구성하여, 공유할 때, 해당 작업을 수행한다.
+``` bash
+# docker push <IMAGE_NAME:TAG>
+docker push mysql:5.7
 ```
 
 
