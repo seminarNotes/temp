@@ -8,13 +8,63 @@
 ## Table of Contents
 1. [Introduction to Docker](#1.-Introduction-to-Docker)
 2. [Install Docker Engine on WLS2](#2.-Install-Docker-Engine-on-WLS2)
-3. [Install Airflow in Docker](#3.-Install-Airflow-in-Docker) 
+3. [Basic Docker Commands](#3.-Basic-Docker-Commands) 
 
 ## 1. Introduction to Docker  
 Docker는 컨테이너화 기술을 기반으로 하는 오픈 소스 플랫폼으로, 애플리케이션을 패키징하고 실행하는 데 활용된다.  Docker는 애플리케이션과 그 의존성을 격리된 환경인 "컨테이너"에 포장하여 이식성을 높이고, 환경 간에 쉽게 배포 및 실행할 수 있다는 장점이 존재한다.
 
 
-## 2. Install Docker Engine on WLS2
+## 2. Basic Docker Commands  
+### 2-1. Commands for images
+Docker는 이미지(image)를 통해 애플리케이션 및 환경을 패키징하고, 이 이미지를 Docker Hub와 같은 Docker 레지스트리에서 다른 사람들과 공유하며, 로컬 머신으로 이미지를 가져와서 컨테이너(container)로 실행하는 구조이다. 따라서, 맨 처음 image에 대한 기본적인 command에 대해서 알아보자.
+
+#### Docker Registry에서 이미지 조회  
+검색어(SEARCH_KEYWORD)를 사용하여 이미지를 찾고 해당 이미지의 이름, 설명 등을 확인할 수 있다. 예를 들어, mysql에 대한 이미지를 조회하면 다음과 같은 출력을 확인 할 수 있다.
+``` bash
+# docker search <SEARCH_KEYWORD>
+docker search mysql
+```
+```
+NAME                            DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+mysql                           MySQL is a widely used, open-source relation…   14767     [OK]
+mariadb                         MariaDB Server is a high performing open sou…   5633      [OK]
+percona                         Percona Server is a fork of the MySQL relati…   624       [OK]
+phpmyadmin                      phpMyAdmin - A web interface for MySQL and M…   928       [OK]
+bitnami/mysql                   Bitnami MySQL Docker Image                      106                  [OK]
+bitnami/mysqld-exporter                                                         6
+cimg/mysql                                                                      2
+ubuntu/mysql                    MySQL open source fast, stable, multi-thread…   56
+rapidfort/mysql                 RapidFort optimized, hardened image for MySQL   25
+rapidfort/mysql8-ib             RapidFort optimized, hardened image for MySQ…   9
+google/mysql                    MySQL server for Google Compute Engine          25                   [OK]
+rapidfort/mysql-official        RapidFort optimized, hardened image for MySQ…   9
+elestio/mysql                   Mysql, verified and packaged by Elestio         0
+hashicorp/mysql-portworx-demo                                                   0
+bitnamicharts/mysql                                                             0
+newrelic/mysql-plugin           New Relic Plugin for monitoring MySQL databa…   1                    [OK]
+databack/mysql-backup           Back up mysql databases to... anywhere!         105
+linuxserver/mysql               A Mysql container, brought to you by LinuxSe…   41
+mirantis/mysql                                                                  0
+linuxserver/mysql-workbench                                                     54
+vitess/mysqlctld                vitess/mysqlctld                                1                    [OK]
+eclipse/mysql                   Mysql 5.7, curl, rsync                          1                    [OK]
+drupalci/mysql-5.5              https://www.drupal.org/project/drupalci         3                    [OK]
+drupalci/mysql-5.7              https://www.drupal.org/project/drupalci         0
+datajoint/mysql                 MySQL image pre-configured to work smoothly …   2                    [OK]
+```
+
+#### 이미지 다운로
+Docker 이미지를 Docker 레지스트리에서 로컬 머신으로 다운로드
+검색어(SEARCH_KEYWORD)를 사용하여 이미지를 찾고 해당 이미지의 이름, 설명 등을 확인할 수 있다.이미지 이름과 선택적으로 태그를 지정하여 원하는 이미지를 가져올 수 있지만, tag를 생략할 경우, 가장 최신 버전의 image를 가지고 온다.
+
+
+
+
+
+
+
+
+
 wsl를 통해 home/user 디렉토리로 이동한 다음, 에러를 발생시키는 패키지를 먼저 삭제한다.
 ```console
 for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
@@ -23,9 +73,40 @@ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker c
 설치 전, 설치된 패키지 목록을 최신 상태로 업데이트 한다.
 ```console
 sudo apt-get update
-
-
-
+```
+이 후, 필요한 패키지를 차례대로 설치한다.
+```console
+sudo apt-get install ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+```
+아래는 파일에 대한 권한을 변경하는 명령어로, 유저에게 docker.gpg 파일에 대한 읽기 권한을 부여한다.
+```console
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+```
+마지막으로, 저장소를 통해 Docker를 설치하고, 업데이트 할 수 있도록, Docker의 공식 APT 패키지 저장소를 시스템에 추가한다.
+```console
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+필요한 패키지를 모두 성공적으로 설치하였으면, 최신 상태로 업데이트 한다.
+```console
+sudo apt-get update
+```
+아래는 Docker와 관련된 패키지를 설치하는 것으로, docker-ce(Docker Community Edition), docker-ce-cil(Docker Command Line Interface), containerd.io(컨테이너 실행과 관리를 담당하는 런타임), docker-buildx-plugin, docker-compose-plugin(플러그인)을 차례대로 설치한다.
+```console
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+Docker 프로그램을 실행하는 것으로 다음 명령어를 입력한다.
+```console
+sudo service docker start
+```
+마지막으로, "sudo docker run hello-world"를 입력하여 에러가 발생하지 않으면서, 정상적으로 설치되었음을 확인할 수 있다.
+```console
+sudo docker run hello-world
+```
 
 # practice--docker
 # Linux에서 docker 삭제 
