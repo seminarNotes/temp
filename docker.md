@@ -18,7 +18,7 @@ Docker는 컨테이너화 기술을 기반으로 하는 오픈 소스 플랫폼�
 ### 2-1. Commands for images
 Docker는 이미지(image)를 통해 애플리케이션 및 환경을 패키징하고, 이 이미지를 Docker Hub와 같은 Docker 레지스트리에서 다른 사람들과 공유하며, 로컬 머신으로 이미지를 가져와서 컨테이너(container)로 실행하는 구조이다. 따라서, 맨 처음 image에 대한 기본적인 command에 대해서 알아보자.
 
-#### Docker Registry에서 이미지 조회  
+#### 2-1-1. Docker Registry에서 이미지 조회  
 검색어(SEARCH_KEYWORD)를 사용하여 이미지를 찾고 해당 이미지의 이름, 설명 등을 확인할 수 있다. 예를 들어, mysql에 대한 이미지를 조회하면 다음과 같은 출력을 확인 할 수 있다.
 ``` bash
 # docker search <SEARCH_KEYWORD>
@@ -53,9 +53,32 @@ drupalci/mysql-5.7              https://www.drupal.org/project/drupalci         
 datajoint/mysql                 MySQL image pre-configured to work smoothly …   2                    [OK]
 ```
 
-#### 이미지 다운로
-Docker 이미지를 Docker 레지스트리에서 로컬 머신으로 다운로드
-검색어(SEARCH_KEYWORD)를 사용하여 이미지를 찾고 해당 이미지의 이름, 설명 등을 확인할 수 있다.이미지 이름과 선택적으로 태그를 지정하여 원하는 이미지를 가져올 수 있지만, tag를 생략할 경우, 가장 최신 버전의 image를 가지고 온다.
+#### 2-1-2. 이미지 다운로드
+Docker 이미지를 Docker 레지스트리에서 로컬 머신으로 다운로드한다. 이미지 이름과 선택적으로 태그를 지정하여 원하는 이미지를 가져올 수 있지만, tag를 생략할 경우, 가장 최신 버전의 image를 가지고 온다.
+``` bash
+# docker pull <SEARCH_KEYWORD>
+docker pull mysql
+```
+```
+Using default tag: latest
+latest: Pulling from library/mysql
+bce031bc522d: Pull complete
+cf7e9f463619: Pull complete
+105f403783c7: Pull complete
+878e53a613d8: Pull complete
+2a362044e79f: Pull complete
+6e4df4f73cfe: Pull complete
+69263d634755: Pull complete
+fe5e85549202: Pull complete
+5c02229ce6f1: Extracting [============================>                      ]  35.09MB/62.09MB
+7320aa32bf42: Download complete
+```
+
+#### 2-1-3. 로컬 머에서 이미지 조회  
+로컬 머신에 저장된 모든 Docker 이미지를 나열한다. 이미지 이름, 태그, 이미지 ID 및 크기 정보가 표시된다.
+``` bash
+docker images
+```
 
 
 
